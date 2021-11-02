@@ -208,7 +208,7 @@ defmodule Finch.Conn do
         receive_response(entries, fun.({:data, value}, acc), fun, mint, ref, timeout)
 
       {:done, ^ref} ->
-        {:ok, mint, acc}
+        {:ok, mint, fun.(:done, acc)}
 
       {:error, ^ref, error} ->
         {:error, mint, error}

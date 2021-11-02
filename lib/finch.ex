@@ -208,7 +208,7 @@ defmodule Finch do
   Streams an HTTP request and returns the accumulator.
 
   A function of arity 2 is expected as argument. The first argument
-  is a tuple, as listed below, and the second argument is the
+  is a stream command, as listed below, and the second argument is the
   accumulator. The function must return a potentially updated
   accumulator.
 
@@ -217,6 +217,7 @@ defmodule Finch do
     * `{:status, status}` - the status of the http response
     * `{:headers, headers}` - the headers of the http response
     * `{:data, data}` - a streaming section of the http body
+    * `:done` - the request has completed
 
   ## Options
 
@@ -269,6 +270,7 @@ defmodule Finch do
       {:status, value}, {_, headers, body} -> {value, headers, body}
       {:headers, value}, {status, headers, body} -> {status, headers ++ value, body}
       {:data, value}, {status, headers, body} -> {status, headers, [value | body]}
+      :done, {status, headers, body} -> {status, headers, body}
     end
 
     with {:ok, {status, headers, body}} <- stream(req, name, acc, fun, opts) do
