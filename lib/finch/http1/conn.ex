@@ -238,7 +238,7 @@ defmodule Finch.Conn do
         )
 
       {:done, ^ref} ->
-        {:ok, mint, acc, {status, headers}}
+        {:ok, mint, fun.(:done, acc), {status, headers}}
 
       {:error, ^ref, error} ->
         {:error, mint, error, {status, headers}}

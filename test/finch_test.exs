@@ -566,6 +566,7 @@ defmodule FinchTest do
         {:status, value}, {_, headers, body} -> {value, headers, body}
         {:headers, value}, {status, headers, body} -> {status, headers ++ value, body}
         {:data, value}, {status, headers, body} -> {status, headers, body <> value}
+        :done, state -> state
       end
 
       assert {:ok, {200, [_ | _], "OK"}} =
@@ -631,6 +632,7 @@ defmodule FinchTest do
         {:status, value}, {_, headers, body} -> {value, headers, body}
         {:headers, value}, {status, headers, body} -> {status, headers ++ value, body}
         {:data, value}, {status, headers, body} -> {status, headers, body <> value}
+        :done, state -> state
       end
 
       assert {:ok, {200, [_ | _], ^resp_body}} =
@@ -660,6 +662,7 @@ defmodule FinchTest do
         {:status, value}, {_, headers, body} -> {value, headers, body}
         {:headers, value}, {status, headers, body} -> {status, headers ++ value, body}
         {:data, value}, {status, headers, body} -> {status, headers, body <> value}
+        :done, state -> state
       end
 
       assert {:ok, {200, [_ | _], ^resp_body}} =
